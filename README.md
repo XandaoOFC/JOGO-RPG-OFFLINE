@@ -35,16 +35,7 @@ RPG DIVINO é um jogo **offline**, totalmente jogável no navegador ou como “a
 - Missões diárias com **chance de eventos épicos**  
 - Pets e artefatos lendários  
 - Exploração e combate  
-- Offline, sem necessidade de internet  
-
----
-
-## 📁 Arquivos
-
-- `index.html` → página principal do RPG  
-- `style.css` → estilos e animações  
-- `script.js` → lógica do jogo, missões, eventos e combate  
-- `favicon.svg` → ícone do RPG  
+- Offline, sem necessidade de internet -
 
 ---
 
