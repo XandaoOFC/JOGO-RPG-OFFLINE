@@ -10,7 +10,7 @@ RPG DIVINO é um jogo **offline**, totalmente jogável no navegador ou como “a
 - Crie seu personagem cósmico  
 - Complete **missões diárias comuns e épicas**  
 - Domine **pets lendários e artefatos raros**  
-- Evolua e suba de nível  
+- Evolua e suba de nível
 - Eventos diários garantem surpresas e bônus  
 
 ---
