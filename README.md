@@ -6,12 +6,13 @@
 
 ## 🌌 Sobre o jogo
 
-RPG DIVINO é um jogo **offline**, totalmente jogável no navegador ou como “app” no celular.  
+RPG DIVINO é um jogo **offline**, totalmente jogável no navegador ou como “app” no celular.
+
 - Crie seu personagem cósmico  
 - Complete **missões diárias comuns e épicas**  
 - Domine **pets lendários e artefatos raros**  
-- Evolua e suba de nível
-- Eventos diários garantem surpresas e bônus  
+- Evolua e suba de nível  
+- Eventos diários garantem surpresas e bônus
 
 ---
 
@@ -23,8 +24,8 @@ RPG DIVINO é um jogo **offline**, totalmente jogável no navegador ou como “a
 3. Explore, lute e complete missões  
 4. Progresso é salvo automaticamente **no navegador**  
 5. Para jogar como “app” no celular:
-   - Android: Menu → Adicionar à tela inicial  
-   - iPhone: Compartilhar → Adicionar à Tela de Início  
+   - Android: Menu → **Adicionar à tela inicial**  
+   - iPhone: Compartilhar → **Adicionar à Tela de Início**
 
 ---
 
@@ -35,16 +36,17 @@ RPG DIVINO é um jogo **offline**, totalmente jogável no navegador ou como “a
 - Missões diárias com **chance de eventos épicos**  
 - Pets e artefatos lendários  
 - Exploração e combate  
-- Offline, sem necessidade de internet -
+- Offline, sem necessidade de internet
 
 ---
 
 ## 🚀 Atualizações
 
-Novas versões podem trazer:  
+Novas versões podem trazer:
+
 - Mais pets lendários e artefatos  
 - Novas animações cósmicas  
-- Missões diárias mais complexas  
+- Missões diárias mais complexas
 
 ---
 
