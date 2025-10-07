@@ -1,54 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>RPG DIVINO</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RPG DIVINO: Transcendência Total</title>
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script defer src="script.js"></script>
 </head>
 <body>
-<div id="site">
-  <header class="hero">
-    <div class="logo-wrap">
-      <div id="logo">RPG <span>DIVINO</span></div>
-      <p class="tag">A jornada cósmica começa agora</p>
+  <div id="game-container">
+    <div id="menu" class="screen active">
+      <h1>RPG DIVINO</h1>
+      <button onclick="newGame()">Novo Jogo</button>
+      <button onclick="continueGame()">Continuar</button>
+      <button onclick="showCredits()">Créditos</button>
     </div>
-  </header>
 
-  <main class="menu" id="menu">
-    <button id="startBtn" class="glow">Começar Aventura</button>
-    <button id="settingsBtn">Instruções</button>
-  </main>
-
-  <section id="game" class="hidden">
-    <div class="topbar">
-      <div id="playerName">Jogador</div>
-      <div id="playerLevel">Nível 1</div>
+    <div id="intro" class="screen hidden">
+      <div class="intro-text" id="introText"></div>
     </div>
-    <div id="status">
-      <div id="hpBar"><div id="hpFill"></div></div>
-      <div id="mpBar"><div id="mpFill"></div></div>
-    </div>
-    <div id="story">Bem-vindo ao universo divino — explore e domine.</div>
-    <div id="controls">
-      <button id="exploreBtn">Explorar</button>
-      <button id="battleBtn">Combate</button>
-      <button id="saveBtn">Salvar</button>
-    </div>
-  </section>
 
-  <aside id="settingsModal" class="modal hidden">
-    <h3>Instruções</h3>
-    <p>Jogo offline. Salva automaticamente no navegador.</p>
-    <button id="closeSettingsBtn">Fechar</button>
-  </aside>
-</div>
+    <div id="game" class="screen hidden">
+      <div id="hud">
+        <p id="playerName"></p>
+        <p id="playerLevel"></p>
+        <p id="playerCoins"></p>
+      </div>
+      <div id="map"></div>
+    </div>
 
-<script src="script.js"></script>
-<script>
-document.getElementById('settingsBtn').onclick = ()=>{ document.getElementById('settingsModal').classList.remove('hidden'); };
-document.getElementById('closeSettingsBtn').onclick = ()=>{ document.getElementById('settingsModal').classList.add('hidden'); };
-</script>
+    <div id="credits" class="screen hidden">
+      <h2>Créditos</h2>
+      <p>Desenvolvido por Xandão e ChatGPT</p>
+      <button onclick="returnToMenu()">Voltar</button>
+    </div>
+  </div>
 </body>
 </html>

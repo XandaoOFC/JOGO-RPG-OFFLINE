@@ -1,121 +1,68 @@
-// RPG DIVINO OFFLINE FINAL - Épico com eventos diários
-let player={name:'',level:1,xp:0,hp:120,maxHp:120,mp:60,maxMp:60,attack:16,defense:8,dailyBonus:null};
-let pets=[],achievements=[],missions=[],lastMissionDate='';
-let playerName=prompt("🌌 Bem-vindo ao RPG DIVINO! Qual é o seu nome?");
-player.name=(playerName&&playerName.trim()!=='')?playerName.trim():'Jogador Divino';
-const startBtn=document.getElementById('startBtn'),
-gameSection=document.getElementById('game'),
-menu=document.getElementById('menu'),
-story=document.getElementById('story'),
-hpFill=document.getElementById('hpFill'),
-mpFill=document.getElementById('mpFill'),
-playerLevelEl=document.getElementById('playerLevel'),
-playerNameEl=document.getElementById('playerName'),
-saveBtn=document.getElementById('saveBtn');
+let player = { name: '', level: 1, coins: 0, xp: 0 };
 
-function updateBars(){
-    hpFill.style.width=(player.hp/player.maxHp*100)+'%';
-    mpFill.style.width=(player.mp/player.maxMp*100)+'%';
-    playerLevelEl.innerText='Nível '+player.level;
-    playerNameEl.innerText=player.name;
+function saveGame() {
+  localStorage.setItem('rpgDivinoSave', JSON.stringify(player));
 }
-function rand(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
-function xpToNext(level){return Math.floor(50*Math.pow(level,2));}
-function grantXP(amount){player.xp+=amount;story.innerText=`Ganhou ${amount} XP.`;while(player.xp>=xpToNext(player.level)){player.xp-=xpToNext(player.level);levelUp();}updateBars();}
-function levelUp(){player.level+=1;player.maxHp+=18;player.maxMp+=8;player.attack+=4;player.defense+=2;player.hp=player.maxHp;player.mp=player.maxMp;story.innerText=`✨ SUBIU PARA O NÍVEL ${player.level}!`;saveProgressOffline();}
-function saveProgressOffline(){localStorage.setItem('rpgDivinoPlayer',JSON.stringify({player,pets,achievements,missions,lastMissionDate}));}
-function loadProgressOffline(){const data=localStorage.getItem('rpgDivinoPlayer');if(data){const d=JSON.parse(data);Object.assign(player,d.player);pets=d.pets||[];achievements=d.achievements||[];missions=d.missions||[];lastMissionDate=d.lastMissionDate||'';}}
 
-function generateDailyMissionsEpic(){
-    const today=new Date().toDateString();
-    if(lastMissionDate===today)return;
-    lastMissionDate=today;
-    missions=[];
-    const types=['Derrotar inimigos','Domar pets','Explorar'];
-    for(let i=0;i<3;i++){
-        const type=types[rand(0,types.length-1)];
-        missions.push({type,target:rand(1,5),completed:0,rare:false});
+function loadGame() {
+  const save = localStorage.getItem('rpgDivinoSave');
+  if (save) player = JSON.parse(save);
+}
+
+function newGame() {
+  const name = prompt('Digite o nome do seu personagem:');
+  if (!name) return;
+  player.name = name;
+  player.level = 1;
+  player.coins = 0;
+  saveGame();
+  startIntro();
+}
+
+function continueGame() {
+  loadGame();
+  if (!player.name) {
+    alert('Nenhum jogo salvo encontrado.');
+    return;
+  }
+  startGame();
+}
+
+function startIntro() {
+  document.getElementById('menu').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  const introText = document.getElementById('introText');
+  const story = `Em um universo onde os deuses dormem e o caos desperta, ${player.name} surge para transcender os limites da realidade...`;
+  let i = 0;
+  const interval = setInterval(() => {
+    introText.textContent += story[i];
+    i++;
+    if (i >= story.length) {
+      clearInterval(interval);
+      setTimeout(startGame, 3000);
     }
-    if(Math.random()<0.2){
-        const rareTypes=['Domar Ser Divino','Derrotar Monstro Épico','Encontrar Artefato Lendário'];
-        const rareType=rareTypes[rand(0,rareTypes.length-1)];
-        missions.push({type:rareType,target:1,completed:0,rare:true});
-    }
+  }, 60);
 }
 
-function completeMissionEpic(index,amount){
-    if(!missions[index])return;
-    missions[index].completed+=amount;
-    if(missions[index].completed>=missions[index].target){
-        missions[index].completed=missions[index].target;
-        if(missions[index].rare){
-            story.innerText=`✨ MISSÃO ÉPICA CONCLUÍDA: ${missions[index].type}! ✨`;
-            grantXP(60+rand(20,40));
-            pets.push('Pet Lendário #'+rand(1,99));
-        }else{
-            story.innerText=`✅ Missão concluída: ${missions[index].type} (${missions[index].target})`;
-            grantXP(30+rand(5,15));
-        }
-    }
-    saveProgressOffline();
+function startGame() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('menu').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  updateHUD();
 }
 
-function dailyCosmicEvent(){
-    const today=new Date().toDateString();
-    const lastEventDate=localStorage.getItem('rpgDivinoLastEvent')||'';
-    if(today===lastEventDate)return;
-    localStorage.setItem('rpgDivinoLastEvent',today);
-    const events=[
-        {msg:"🌌 Um portal cósmico surge hoje!",bonus:"pet"},
-        {msg:"✨ As estrelas brilham mais intensas, XP bônus!",bonus:"xp"},
-        {msg:"⚡ Um artefato lendário aparece!",bonus:"item"}
-    ];
-    const event=events[rand(0,events.length-1)];
-    story.innerText=event.msg;
-    player.dailyBonus=event.bonus;
+function updateHUD() {
+  document.getElementById('playerName').textContent = `Nome: ${player.name}`;
+  document.getElementById('playerLevel').textContent = `Nível: ${player.level}`;
+  document.getElementById('playerCoins').textContent = `Moedas: ${player.coins}`;
 }
 
-function applyDailyBonus(){
-    if(!player.dailyBonus)return;
-    if(player.dailyBonus==="pet"){
-        pets.push("Pet Cósmico #"+rand(100,999));
-        story.innerText+=" Você recebeu um Pet Cósmico!";
-    }else if(player.dailyBonus==="xp"){
-        grantXP(50+rand(10,30));
-    }else if(player.dailyBonus==="item"){
-        pets.push("Artefato Lendário #"+rand(1,99));
-        story.innerText+=" Você encontrou um Artefato Lendário!";
-    }
-    player.dailyBonus=null;
-    saveProgressOffline();
+function showCredits() {
+  document.getElementById('menu').classList.add('hidden');
+  document.getElementById('credits').classList.remove('hidden');
 }
 
-loadProgressOffline();
-generateDailyMissionsEpic();
-dailyCosmicEvent();
-updateBars();
-
-startBtn.onclick=()=>{menu.classList.add('hidden');gameSection.classList.remove('hidden');updateBars();};
-
-document.getElementById('battleBtn').onclick=()=>{
-    const dmg=rand(8,20);
-    story.innerText=`Você derrotou inimigos e ganhou ${dmg} XP.`;
-    grantXP(dmg);
-    missions.forEach((m,i)=>{if(m.type==='Derrotar inimigos')completeMissionEpic(i,1);});
-    applyDailyBonus();
-};
-
-document.getElementById('exploreBtn').onclick=()=>{
-    story.innerText='Explorando...';
-    const found=Math.random()<0.3;
-    if(found){
-        const item='Artefato '+rand(1,99);
-        pets.push(item);
-        story.innerText=`Você encontrou e domou: ${item}!`;
-        missions.forEach((m,i)=>{if(m.type==='Domar pets')completeMissionEpic(i,1);});
-        applyDailyBonus();
-    }else story.innerText='Nada encontrado.';
-    saveProgressOffline();
-};
-
-saveBtn.onclick=()=>{saveProgressOffline();story.innerText='Progresso salvo!';};
+function returnToMenu() {
+  document.getElementById('credits').classList.add('hidden');
+  document.getElementById('menu').classList.remove('hidden');
+}
